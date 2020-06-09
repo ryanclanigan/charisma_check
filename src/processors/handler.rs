@@ -1,8 +1,5 @@
 use crate::datums::users::Users;
 use crate::processors::scorer::Scorer;
-use crate::serializers::serializer::Serializer;
-use crate::serializers::user_serializer::UserSerializer;
-use serenity::model::channel::*;
 use serenity::model::{channel::Message, gateway::Ready};
 use serenity::prelude::*;
 use std::path::Path;
@@ -18,6 +15,42 @@ impl Handler {
             users: Arc::new(Mutex::new(Users::new())),
         }
     }
+
+    const MAX_USER_COUNT_BEFORE_WRITE: usize = 4;
+    const SCORE_MODULO_BEFORE_WRITE: u64 = 10;
+    pub const SCORES_DIRECTORY: &'static str = "scores";
+
+    /// Updates the user scores with the current message context, and then writes if
+    /// the score thresholds have been met.
+    fn update_and_maybe_write_users(&self, message: &Message) {
+        let mut users = self.users.lock().unwrap();
+        let result = users.put(
+            message.author.id.0,
+            Scorer::score_message(message.content.clone()),
+            Handler::SCORE_MODULO_BEFORE_WRITE,
+        );
+
+        if users.size() == Handler::MAX_USER_COUNT_BEFORE_WRITE || result.is_some() {
+            match users.write(Path::new(&format!(
+                "{}{}{}",
+                Handler::SCORES_DIRECTORY,
+                message.channel_id.0.to_string(),
+                ".csv"
+            ))) {
+                Err(e) => println!("{}", e.to_string()),
+                Ok(_) => users.clear(),
+            }
+        }
+    }
+
+    fn maybe_send_loot(&self, message: &Message, context: &Context) {
+        let mut users = self.users.lock().unwrap();
+
+        let user = &message.author;
+        user.direct_message(context, |m| {
+            m.content(format!("Loot awarded! You got a {}", "f"))
+        });
+    }
 }
 
 impl EventHandler for Handler {
@@ -27,7 +60,7 @@ impl EventHandler for Handler {
             let cache = &context.cache.read();
             cache.user.id
         };
-        match message.channel(&context.cache) {
+        match message.channel(&context) {
             None => panic!("Channel not found in cache. Something bad has happened."),
             Some(channel) => {
                 match channel.guild() {
@@ -36,31 +69,7 @@ impl EventHandler for Handler {
                         let guild_name = read_lock.name();
                         if guild_name.to_lowercase().contains("roleplay") && me != message.author.id
                         {
-                            let mut users = self.users.lock().unwrap();
-                            let result = users.put(
-                                message.author.id.0,
-                                Scorer::score_message(message.content.clone()),
-                                10,
-                            );
-
-                            if users.size() == 4 || result.is_some() {
-                                let records = users.to_records();
-                                match UserSerializer::new(Path::new(
-                                    &(message.channel_id.0.to_string() + ".csv"),
-                                )) {
-                                    Err(e) => println!(
-                                        "Couldn't write records to disk. Error: {}",
-                                        e.to_string()
-                                    ),
-                                    Ok(s) => match s.write(records) {
-                                        Err(e) => println!("{}", e),
-                                        Ok(_) => match message.reply(context, "Laserbeam") {
-                                            Err(e) => println!("{}", e),
-                                            _ => (),
-                                        },
-                                    },
-                                };
-                            }
+                            self.update_and_maybe_write_users(&message);
                         }
                     }
                     None => panic!(
