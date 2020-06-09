@@ -1,0 +1,388 @@
+Armor of Gleaming
+Cast-Off Armor
+Shield of Expression
+Smoldering Armor
+Adamantine Armor
+Mariner's Armor
+Mithral Armor
+Sentinel Shield
+"Shield, +1"
+Armor of Resistance
+Armor of Vulnerability
+"Armor, +1"
+Arrow-catching Shield
+Elven Chain
+Glamoured Studded Leather
+Shield of Missile Attraction
+"Shield, +2"
+Animated Shield
+"Armor, +2"
+Demon Armor
+Dragon Scale Mail
+Dwarven Plate
+"Shield, +3"
+Spellguard Shield
+Armor of Invulnerability
+"Armor, +3"
+Efreeti Chain
+Plate Armor of Etherealness
+Potion of Climbing
+Potion of Healing
+Oil of Slipperiness
+Philter of Love
+Potion of Animal Friendship
+Potion of Fire Breath
+Potion of Greater Healing
+Potion of Growth
+Potion of Hill Giant Strength
+Potion of Poison
+Potion of Resistance
+Potion of Water Breathing
+Elixir of Health
+Oil of Etherealness
+Potion of Clairvoyance
+Potion of Diminution
+Potion of Fire Giant Strength
+Potion of Frost Giant Strength
+Potion of Gaseous Form
+Potion of Heroism
+Potion of Invulnerability
+Potion of Mind Reading
+Potion of Stone Giant Strength
+Potion of Superior Healing
+Oil of Sharpness
+Potion of Cloud Giant Strength
+Potion of Flying
+Potion of Invisibility
+Potion of Longevity
+Potion of Speed
+Potion of Supreme Healing
+Potion of Vitality
+Potion of Storm Giant Strength
+Ring of Jumping
+Ring of Mind Shielding
+Ring of Swimming
+Ring of Warmth
+Ring of Water Walking
+Ring of Animal Influence
+Ring of Evasion
+Ring of Feather Falling
+Ring of Free Action
+Ring of Protection
+Ring of Resistance
+Ring of Spell Storing
+Ring of X-ray Vision
+Ring of the Ram
+Ring of Regeneration
+Ring of Shooting Stars
+Ring of Telekinesis
+Ring of Air Elemental Command
+Ring of Djinni Summoning
+Ring of Earth Elemental Command
+Ring of Fire Elemental Command
+Ring of Invisibility
+Ring of Spell Turning
+Ring of Three Wishes
+Ring of Water Elemental Command
+Immovable Rod
+"Rod of the Pact Keeper, +1"
+Rod of Rulership
+"Rod of the Pact Keeper, +2"
+Tentacle Rod
+Rod of Absorption
+Rod of Alertness
+Rod of Security
+"Rod of the Pact Keeper, +3"
+Rod of Lordly Might
+Rod of Resurrection
+"Spell Scroll, 1st Level"
+"Spell Scroll, Cantrip"
+"Spell Scroll, 2nd Level"
+"Spell Scroll, 3rd Level"
+Scroll of Protection
+"Spell Scroll, 4th Level"
+"Spell Scroll, 5th Level"
+"Spell Scroll, 6th Level"
+"Spell Scroll, 7th Level"
+"Spell Scroll, 8th Level"
+"Spell Scroll, 9th Level"
+Staff of Adornment
+Staff of Birdcalls
+Staff of Flowers
+Staff of the Adder
+Staff of the Python
+Staff of Charming
+Staff of Healing
+Staff of Swarming Insects
+Staff of Withering
+Staff of the Woodlands
+Staff of Fire
+Staff of Frost
+Staff of Power
+Staff of Striking
+Staff of Thunder and Lightning
+Staff of the Magi
+Wand of Conducting
+Wand of Pyrotechnics
+Wand of Scowls
+Wand of Smiles
+Wand of Magic Detection
+Wand of Magic Missiles
+Wand of Secrets
+Wand of Web
+"Wand of the War Mage, +1"
+Wand of Binding
+Wand of Enemy Detection
+Wand of Fear
+Wand of Fireballs
+Wand of Lightning Bolts
+Wand of Paralysis
+Wand of Wonder
+"Wand of the War Mage, +2"
+Wand of Polymorph
+"Wand of the War Mage, +3"
+Moon-Touched Sword
+Unbreakable Arrow
+Walloping Ammunition
+"Ammunition, +1"
+Javelin of Lightning
+Sword of Vengeance
+Trident of Fish Command
+Weapon of Warning
+"Weapon, +1"
+"Ammunition, +2"
+Berserker Axe
+Dagger of Venom
+Dragon Slayer
+Flame Tongue
+Giant Slayer
+Mace of Disruption
+Mace of Smiting
+Mace of Terror
+Sun Blade
+Sword of Life Stealing
+Sword of Wounding
+Vicious Weapon
+"Weapon, +2"
+"Ammunition, +3"
+Arrow of Slaying
+Dancing Sword
+Dwarven Thrower
+Frost Brand
+Nine Lives Stealer
+Oathbow
+Scimitar of Speed
+Sword of Sharpness
+"Weapon, +3"
+Defender
+Hammer of Thunderbolts
+Holy Avenger
+Luck Blade
+Sword of Answering
+Vorpal Sword
+Bead of Nourishment
+Bead of Refreshment
+Boots of False Tracks
+Candle of the Deep
+Charlatan's Die
+Cloak of Billowing
+Cloak of Many Fashions
+Clockwork Amulet
+Clothes of Mending
+Dark Shard Amulet
+Dread Helm
+Ear Horn of Hearing
+Enduring Spellbook
+Ersatz Eye
+Hat of Vermin
+Hat of Wizardry
+Heward's Handy Spice Pouch
+Horn of Silent Alarm
+Instrument of Illusions
+Instrument of Scribing
+Lock of Trickery
+Mystery Key
+Orb of Direction
+Orb of Time
+Perfume of Bewitching
+Pipe of Smoke Monsters
+Pole of Angling
+Pole of Collapsing
+Pot of Awakening
+Rope of Mending
+Ruby of the War Mage
+Talking Doll
+Tankard of Sobriety
+Veteran's Cane
+Alchemy Jug
+Amulet of Proof Against Detection and Location
+Bag of Holding
+Bag of Tricks
+Boots of Elvenkind
+Boots of Striding and Springing
+Boots of the Winterlands
+Bracers of Archery
+Brooch of Shielding
+Broom of Flying
+Cap of Water Breathing
+Circlet of Blasting
+Cloak of Elvenkind
+Cloak of Protection
+Cloak of the Manta Ray
+Decanter of Endless Water
+Deck of Illusions
+Driftglobe
+Dust of Disappearance
+Dust of Dryness
+Dust of Sneezing and Choking
+Elemental Gem
+Eversmoking Bottle
+Eyes of Charming
+Eyes of Minute Seeing
+Eyes of the Eagle
+"Figurine of Wondrous Power, Silver Raven"
+Gauntlets of Ogre Power
+Gem of Brightness
+Gloves of Missile Snaring
+Gloves of Swimming and Climbing
+Gloves of Thievery
+Goggles of Night
+Hat of Disguise
+Headband of Intellect
+Helm of Comprehending Languages
+Helm of Telepathy
+"Instrument of the Bards, Doss Lute"
+"Instrument of the Bards, Fochlucan Bandore"
+"Instrument of the Bards, Mac-Fuirmidh Cittern"
+Keoghtom's Ointment
+Lantern of Revealing
+Medallion of Thoughts
+Necklace of Adaptation
+Pearl of Power
+Periapt of Health
+Periapt of Wound Closure
+Pipes of Haunting
+Pipes of the Sewers
+Quiver of Ehlonna
+Robe of Useful Items
+Rope of Climbing
+Saddle of the Cavalier
+Sending Stones
+Slippers of Spider Climbing
+Stone of Good Luck
+Wind Fan
+Winged Boots
+Amulet of Health
+Bag of Beans
+Bead of Force
+Belt of Dwarvenkind
+Belt of Hill Giant Strength
+Boots of Levitation
+Boots of Speed
+Bowl of Commanding Water Elementals
+Bracers of Defense
+Brazier of Commanding Fire Elementals
+Cape of the Mountebank
+Censer of Controlling Air Elementals
+Chime of Opening
+Cloak of Displacement
+Cloak of the Bat
+Cube of Force
+Daern's Instant Fortress
+Dimensional Shackles
+"Figurine of Wondrous Power, Bronze Griffon"
+"Figurine of Wondrous Power, Ebony Fly"
+"Figurine of Wondrous Power, Golden Lions"
+"Figurine of Wondrous Power, Ivory Goats"
+"Figurine of Wondrous Power, Marble Elephant"
+"Figurine of Wondrous Power, Onyx Dog"
+"Figurine of Wondrous Power, Serpentine Owl"
+Folding Boat
+Gem of Seeing
+Helm of Teleportation
+Heward's Handy Haversack
+Horn of Blasting
+"Horn of Valhalla, Brass"
+"Horn of Valhalla, Silver"
+Horseshoes of Speed
+"Instrument of the Bards, Canaith Mandolin"
+"Instrument of the Bards, Cli Lyre"
+"Ioun Stone, Awareness"
+"Ioun Stone, Protection"
+"Ioun Stone, Reserve"
+"Ioun Stone, Sustenance"
+Iron Bands of Bilarro
+Mantle of Spell Resistance
+Necklace of Fireballs
+Necklace of Prayer Beads
+Periapt of Proof Against Poison
+Portable Hole
+Quaal's Feather Token
+Robe of Eyes
+Rope of Entanglement
+Stone of Controlling Earth Elementals
+Wings of Flying
+Amulet of the Planes
+Bag of Devouring
+Belt of Fire Giant Strength
+Belt of Frost Giant Strength
+Belt of Stone Giant Strength
+Candle of Invocation
+Carpet of Flying
+Cloak of Arachnida
+Crystal Ball
+Efreeti Bottle
+"Figurine of Wondrous Power, Obsidian Steed"
+Helm of Brilliance
+"Horn of Valhalla, Bronze"
+Horseshoes of a Zephyr
+"Instrument of the Bards, Anstruth Harp"
+"Ioun Stone, Absorption"
+"Ioun Stone, Agility"
+"Ioun Stone, Fortitude"
+"Ioun Stone, Insight"
+"Ioun Stone, Intellect"
+"Ioun Stone, Leadership"
+"Ioun Stone, Strength"
+Manual of Bodily Health
+Manual of Gainful Exercise
+Manual of Golems
+Manual of Quickness of Action
+Mirror of Life Trapping
+Nolzur's Marvelous Pigments
+Robe of Scintillating Colors
+Robe of Stars
+Tome of Clear Thought
+Tome of Leadership and Influence
+Tome of Understanding
+Apparatus of Kwalish
+Belt of Cloud Giant Strength
+Belt of Storm Giant Strength
+Cloak of Invisibility
+Crystal Ball of Mind Reading
+Crystal Ball of Telepathy
+Crystal Ball of True Seeing
+Cubic Gate
+Deck of Many Things
+"Horn of Valhalla, Iron"
+"Instrument of the Bards, Ollamh Harp"
+"Ioun Stone, Greater Absorption"
+"Ioun Stone, Mastery"
+"Ioun Stone, Regeneration"
+Iron Flask
+Robe of the Archmagi
+Scarab of Protection
+Sovereign Glue
+Sphere of Annihilation
+Talisman of Pure Good
+Talisman of Ultimate Evil
+Talisman of the Sphere
+Tome of the Stilled Tongue
+Universal Solvent
+Well of Many Worlds
+
+code Copyright © 2009-2020 drow
+
+Some content used under the Open Gaming License
+
+You encounter a wandering Privacy Policy

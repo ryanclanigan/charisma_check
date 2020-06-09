@@ -1,4 +1,4 @@
-use crate::datums::users::Users;
+use super::data_manager::DataManager;
 use crate::processors::scorer::Scorer;
 use serenity::model::{channel::Message, gateway::Ready};
 use serenity::prelude::*;
@@ -6,13 +6,13 @@ use std::path::Path;
 use std::sync::{Arc, Mutex};
 
 pub struct Handler {
-    users: Arc<Mutex<Users>>,
+    users: Arc<Mutex<DataManager>>,
 }
 
 impl Handler {
     pub fn new() -> Self {
         Handler {
-            users: Arc::new(Mutex::new(Users::new())),
+            users: Arc::new(Mutex::new(DataManager::new())),
         }
     }
 
@@ -23,33 +23,28 @@ impl Handler {
     /// Updates the user scores with the current message context, and then writes if
     /// the score thresholds have been met.
     fn update_and_maybe_write_users(&self, message: &Message) {
+        let message_id = *message.channel_id.as_u64();
         let mut users = self.users.lock().unwrap();
         let result = users.put(
-            message.author.id.0,
+            (message_id, message.author.id.0),
             Scorer::score_message(message.content.clone()),
             Handler::SCORE_MODULO_BEFORE_WRITE,
         );
 
         if users.size() == Handler::MAX_USER_COUNT_BEFORE_WRITE || result.is_some() {
-            match users.write(Path::new(&format!(
-                "{}{}{}",
-                Handler::SCORES_DIRECTORY,
-                message.channel_id.0.to_string(),
-                ".csv"
-            ))) {
+            match users.write(
+                Path::new(&format!(
+                    "{}/{}{}",
+                    Handler::SCORES_DIRECTORY,
+                    message.channel_id.0.to_string(),
+                    ".csv"
+                )),
+                message_id,
+            ) {
                 Err(e) => println!("{}", e.to_string()),
-                Ok(_) => users.clear(),
+                Ok(_) => (),
             }
         }
-    }
-
-    fn maybe_send_loot(&self, message: &Message, context: &Context) {
-        let mut users = self.users.lock().unwrap();
-
-        let user = &message.author;
-        user.direct_message(context, |m| {
-            m.content(format!("Loot awarded! You got a {}", "f"))
-        });
     }
 }
 
