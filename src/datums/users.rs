@@ -6,17 +6,31 @@ pub struct Users {
 }
 
 impl Users {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Users {
             usersToScores: HashMap::new(),
         }
     }
 
-    fn put(&mut self, user: u64, score: u64) {
-        self.usersToScores.insert(user, score);
+    pub fn put(&mut self, user: u64, score: u64, threshold: u64) -> Option<u64> {
+        let getResult = self.usersToScores.get(&user);
+        let previous = match getResult {
+            Some(s) => self.usersToScores.insert(user, score + s),
+            None => self.usersToScores.insert(user, score),
+        };
+        match previous {
+            None => None,
+            Some(s) => {
+                if s > threshold {
+                    Some(s)
+                } else {
+                    None
+                }
+            }
+        }
     }
 
-    fn to_records(&self) -> Vec<UserRecord> {
+    pub fn to_records(&self) -> Vec<UserRecord> {
         self.usersToScores
             .iter()
             .map(|(id, score)| UserRecord {
@@ -26,12 +40,12 @@ impl Users {
             .collect()
     }
 
-    fn is_empty(&self) -> bool {
-        self.usersToScores.is_empty()
+    pub fn clear(&mut self) {
+        self.usersToScores.clear();
     }
 
-    fn clear(&mut self) {
-        self.usersToScores.clear();
+    pub fn size(&self) -> usize {
+        self.usersToScores.len()
     }
 }
 

@@ -7,7 +7,7 @@ impl Scorer {
         Scorer {}
     }
 
-    pub fn score_message(message: Message) -> u64 {
+    pub fn score_message(message: String) -> u64 {
         1
     }
 }
