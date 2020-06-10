@@ -126,7 +126,7 @@ impl DataManager {
 
     fn merge(&mut self, others: Vec<UserRecord>, channel_id: ChannelId) {
         for other in others {
-            self.put(channel_id, other, u64::MAX);
+            self.put(channel_id, other, std::u64::MAX);
         }
     }
 
