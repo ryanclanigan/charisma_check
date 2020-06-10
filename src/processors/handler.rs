@@ -1,6 +1,9 @@
 use super::data_manager::DataManager;
+use crate::datums::loot_record::LootRecord;
 use crate::datums::user_record::UserRecord;
 use crate::processors::scorer::Scorer;
+use rand::Rng;
+use serenity::model::id::UserId;
 use serenity::model::{channel::Message, gateway::Ready};
 use serenity::prelude::*;
 use std::path::Path;
@@ -8,12 +11,14 @@ use std::sync::{Arc, Mutex};
 
 pub struct Handler {
     data_manager: Arc<Mutex<DataManager>>,
+    loots: Vec<LootRecord>,
 }
 
 impl Handler {
-    pub fn new() -> Self {
+    pub fn new(loots: Vec<LootRecord>) -> Self {
         Handler {
             data_manager: Arc::new(Mutex::new(DataManager::new())),
+            loots,
         }
     }
 
@@ -24,7 +29,7 @@ impl Handler {
 
     /// Updates the user scores with the current message context, and then writes if
     /// the score thresholds have been met.
-    fn update_and_maybe_write_users(&self, message: &Message) {
+    fn update_and_maybe_write_users(&self, context: &Context, message: &Message) {
         let channel_id = *message.channel_id.as_u64();
         let mut data_manager = self.data_manager.lock().unwrap();
         let result = data_manager.put(
@@ -50,8 +55,27 @@ impl Handler {
                 Err(e) => println!("{}", e.to_string()),
                 Ok(winners) => {
                     println!("Wrote scores for channel {}", channel_id);
-                    if winners.len() > 0 {
-                        
+                    let mut rng = rand::thread_rng();
+                    for winner in winners {
+                        match context.cache.read().users.get(&UserId { 0: winner.id }) {
+                            Some(user) => {
+                                let loot =
+                                    self.loots.get(rng.gen_range(0, self.loots.len())).unwrap();
+
+                                match user.read().dm(context, |m| {
+                                    m.content(format!(
+                                        "You got a {}! Thanks for being a valiant roleplayer!",
+                                        loot.item
+                                    ))
+                                }) {
+                                    Ok(_) => (),
+                                    Err(e) => {
+                                        println!("Could not send DM. Error: {}", e.to_string())
+                                    }
+                                }
+                            }
+                            None => println!("User not found in cache!"),
+                        };
                     }
                 }
             }
@@ -75,13 +99,10 @@ impl EventHandler for Handler {
                         let guild_name = read_lock.name();
                         if guild_name.to_lowercase().contains("roleplay") && me != message.author.id
                         {
-                            self.update_and_maybe_write_users(&message);
+                            self.update_and_maybe_write_users(&context, &message);
                         }
                     }
-                    None => panic!(
-                        "Lootbot linked to a channel that is not a guild channel! Channel Id: {}",
-                        message.channel_id
-                    ),
+                    None => (),
                 };
             }
         }

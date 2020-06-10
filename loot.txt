@@ -1,3 +1,4 @@
+item
 Armor of Gleaming
 Cast-Off Armor
 Shield of Expression
@@ -380,9 +381,3 @@ Talisman of the Sphere
 Tome of the Stilled Tongue
 Universal Solvent
 Well of Many Worlds
-
-code Copyright © 2009-2020 drow
-
-Some content used under the Open Gaming License
-
-You encounter a wandering Privacy Policy

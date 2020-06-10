@@ -97,8 +97,8 @@ impl DataManager {
 
                 self.merge(on_disk_users, channel_id.clone());
 
-                let records_to_write = Vec::new();
-                let winners = Vec::new();
+                let mut records_to_write = Vec::new();
+                let mut winners = Vec::new();
                 for record in self.to_records(channel_id) {
                     if record.score >= winning_score {
                         records_to_write.push(UserRecord::new(record.id, 0));
