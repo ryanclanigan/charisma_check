@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Drivers write and read data to/from some arbitrary place
 pub trait Driver {
-    fn write<'a, T>(self, to_write: Vec<T>) -> Result<()>
+    fn write<'a, T>(self, to_write: &Vec<T>) -> Result<()>
     where
         T: Serialize + Deserialize<'a>;
 

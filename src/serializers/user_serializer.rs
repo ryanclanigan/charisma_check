@@ -20,7 +20,7 @@ impl<'a> UserSerializer<'a> {
 }
 
 impl<'a> Serializer<UserRecord> for UserSerializer<'a> {
-    fn write(&self, records: Vec<UserRecord>) -> Result<()> {
+    fn write(&self, records: &Vec<UserRecord>) -> Result<()> {
         self.driver.write(records)
     }
 

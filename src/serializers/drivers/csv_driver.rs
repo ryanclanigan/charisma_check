@@ -22,7 +22,7 @@ impl<'b> CsvDriver<'b> {
 }
 
 impl<'b> Driver for CsvDriver<'b> {
-    fn write<'a, T>(self, to_write: Vec<T>) -> Result<()>
+    fn write<'a, T>(self, to_write: &Vec<T>) -> Result<()>
     where
         T: Serialize + Deserialize<'a>,
     {

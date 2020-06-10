@@ -1,4 +1,5 @@
 use super::data_manager::DataManager;
+use crate::datums::user_record::UserRecord;
 use crate::processors::scorer::Scorer;
 use serenity::model::{channel::Message, gateway::Ready};
 use serenity::prelude::*;
@@ -6,43 +7,53 @@ use std::path::Path;
 use std::sync::{Arc, Mutex};
 
 pub struct Handler {
-    users: Arc<Mutex<DataManager>>,
+    data_manager: Arc<Mutex<DataManager>>,
 }
 
 impl Handler {
     pub fn new() -> Self {
         Handler {
-            users: Arc::new(Mutex::new(DataManager::new())),
+            data_manager: Arc::new(Mutex::new(DataManager::new())),
         }
     }
 
     const MAX_USER_COUNT_BEFORE_WRITE: usize = 4;
     const SCORE_MODULO_BEFORE_WRITE: u64 = 10;
+    const WINNING_SCORE: u64 = 53;
     pub const SCORES_DIRECTORY: &'static str = "scores";
 
     /// Updates the user scores with the current message context, and then writes if
     /// the score thresholds have been met.
     fn update_and_maybe_write_users(&self, message: &Message) {
-        let message_id = *message.channel_id.as_u64();
-        let mut users = self.users.lock().unwrap();
-        let result = users.put(
-            (message_id, message.author.id.0),
-            Scorer::score_message(message.content.clone()),
+        let channel_id = *message.channel_id.as_u64();
+        let mut data_manager = self.data_manager.lock().unwrap();
+        let result = data_manager.put(
+            channel_id,
+            UserRecord::new(
+                *message.author.id.as_u64(),
+                Scorer::score_message(message.content.clone()),
+            ),
             Handler::SCORE_MODULO_BEFORE_WRITE,
         );
 
-        if users.size() == Handler::MAX_USER_COUNT_BEFORE_WRITE || result.is_some() {
-            match users.write(
+        if data_manager.size() == Handler::MAX_USER_COUNT_BEFORE_WRITE || result.is_some() {
+            match data_manager.write(
                 Path::new(&format!(
                     "{}/{}{}",
                     Handler::SCORES_DIRECTORY,
                     message.channel_id.0.to_string(),
                     ".csv"
                 )),
-                message_id,
+                &channel_id,
+                Handler::WINNING_SCORE,
             ) {
                 Err(e) => println!("{}", e.to_string()),
-                Ok(_) => (),
+                Ok(winners) => {
+                    println!("Wrote scores for channel {}", channel_id);
+                    if winners.len() > 0 {
+                        
+                    }
+                }
             }
         }
     }

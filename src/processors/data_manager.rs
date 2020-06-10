@@ -6,13 +6,12 @@ use std::collections::HashMap;
 use std::path::Path;
 
 type ChannelId = u64;
+type Score = u64;
 type UserId = u64;
-
-/// A channel id and a user id
-type UniqueId = (ChannelId, UserId);
+type UserToScore = HashMap<UserId, Score>;
 
 pub struct DataManager {
-    queued_users_by_channel: HashMap<UniqueId, u64>,
+    queued_users_by_channel: HashMap<ChannelId, UserToScore>,
 }
 
 impl DataManager {
@@ -22,11 +21,27 @@ impl DataManager {
         }
     }
 
-    pub fn put(&mut self, unique_id: UniqueId, score: u64, threshold: u64) -> Option<u64> {
-        let result = self.get(&unique_id);
+    /// Inserts a new user-score combo into the DataManager. If the score is > threshold, return the score,
+    /// otherwise returning None
+    pub fn put(
+        &mut self,
+        channel_id: ChannelId,
+        new_record: UserRecord,
+        threshold: u64,
+    ) -> Option<u64> {
+        let result = self.get(&channel_id);
         let previous = match result {
-            Some(s) => self.queued_users_by_channel.insert(unique_id, score + s),
-            None => self.queued_users_by_channel.insert(unique_id, score),
+            Some(channel) => match channel.get(&new_record.id) {
+                Some(score) => channel.insert(new_record.id, score + new_record.score),
+                None => channel.insert(new_record.id, new_record.score),
+            },
+            None => {
+                self.queued_users_by_channel
+                    .insert(channel_id, HashMap::new());
+                self.get(&channel_id)
+                    .unwrap()
+                    .insert(new_record.id, new_record.score)
+            }
         };
         match previous {
             None => None,
@@ -40,14 +55,14 @@ impl DataManager {
         }
     }
 
-    pub fn to_records(&self, channel_id: ChannelId) -> Vec<UserRecord> {
+    pub fn to_records(&self, channel_id: &ChannelId) -> Vec<UserRecord> {
         let mut results = Vec::new();
-        for (unique_id, score) in &self.queued_users_by_channel {
-            if unique_id.0 == channel_id {
-                results.push(UserRecord {
-                    id: unique_id.1,
-                    score: *score,
-                })
+        match self.queued_users_by_channel.get(channel_id) {
+            None => (),
+            Some(channel) => {
+                for (user, score) in channel {
+                    results.push(UserRecord::new(user.clone(), score.clone()))
+                }
             }
         }
 
@@ -58,7 +73,19 @@ impl DataManager {
         self.queued_users_by_channel.len()
     }
 
-    pub fn write(&mut self, path: &Path, channel_id: ChannelId) -> Result<()> {
+    pub fn size_of_channel(&self, channel_id: &ChannelId) -> usize {
+        match self.queued_users_by_channel.get(channel_id) {
+            None => 0,
+            Some(channel) => channel.len(),
+        }
+    }
+
+    pub fn write(
+        &mut self,
+        path: &Path,
+        channel_id: &ChannelId,
+        winning_score: u64,
+    ) -> Result<Vec<UserRecord>> {
         match UserSerializer::new(path) {
             Err(e) => Err(e),
             Ok(serializer) => {
@@ -70,35 +97,40 @@ impl DataManager {
 
                 self.merge(on_disk_users, channel_id.clone());
 
-                let result = serializer.write(self.to_records(channel_id));
+                let records_to_write = Vec::new();
+                let winners = Vec::new();
+                for record in self.to_records(channel_id) {
+                    if record.score >= winning_score {
+                        records_to_write.push(UserRecord::new(record.id, 0));
+                        winners.push(record)
+                    } else {
+                        records_to_write.push(record)
+                    }
+                }
+
+                let result = serializer.write(&records_to_write);
 
                 self.clear(channel_id);
 
-                result
+                Ok(winners)
             }
         }
     }
 
-    pub fn clear(&mut self, channel_id: ChannelId) {
-        let mut ids_to_remove = Vec::new();
-        for (unique_id, _) in &self.queued_users_by_channel {
-            if unique_id.0 == channel_id {
-                ids_to_remove.push(unique_id);
-            }
+    pub fn clear(&mut self, channel_id: &ChannelId) {
+        match self.get(channel_id) {
+            None => (),
+            Some(channel) => channel.clear(),
         }
     }
 
     fn merge(&mut self, others: Vec<UserRecord>, channel_id: ChannelId) {
-        for record in others {
-            let unique_id = (channel_id.clone(), record.id);
-            match self.get(&unique_id) {
-                Some(score) => self.put(unique_id, record.score + score, u64::MAX),
-                None => self.put(unique_id, record.score, u64::MAX),
-            };
+        for other in others {
+            self.put(channel_id, other, u64::MAX);
         }
     }
 
-    fn get(&self, unique_id: &UniqueId) -> Option<&u64> {
-        self.queued_users_by_channel.get(unique_id)
+    fn get(&mut self, channel_id: &ChannelId) -> Option<&mut UserToScore> {
+        self.queued_users_by_channel.get_mut(channel_id)
     }
 }
